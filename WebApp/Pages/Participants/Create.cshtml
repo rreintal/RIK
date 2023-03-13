@@ -1,0 +1,68 @@
+@page
+@model WebApp.Pages.Participants.CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Participant</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Participant.FirstName" class="control-label"></label>
+                <input asp-for="Participant.FirstName" class="form-control" />
+                <span asp-validation-for="Participant.FirstName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Participant.LastName" class="control-label"></label>
+                <input asp-for="Participant.LastName" class="form-control" />
+                <span asp-validation-for="Participant.LastName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Participant.SocialsecurityNumber" class="control-label"></label>
+                <input asp-for="Participant.SocialsecurityNumber" class="form-control" />
+                <span asp-validation-for="Participant.SocialsecurityNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Participant.CorporationName" class="control-label"></label>
+                <input asp-for="Participant.CorporationName" class="form-control" />
+                <span asp-validation-for="Participant.CorporationName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Participant.CorporationCode" class="control-label"></label>
+                <input asp-for="Participant.CorporationCode" class="form-control" />
+                <span asp-validation-for="Participant.CorporationCode" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Participant.CorporationParcitipationsCount" class="control-label"></label>
+                <input asp-for="Participant.CorporationParcitipationsCount" class="form-control" />
+                <span asp-validation-for="Participant.CorporationParcitipationsCount" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Participant.Comment" class="control-label"></label>
+                <input asp-for="Participant.Comment" class="form-control" />
+                <span asp-validation-for="Participant.Comment" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                            <label asp-for="Participant.ParticipantType" class="control-label"></label>
+                            <select asp-for="Participant.ParticipantType" class="form-control" asp-items="ViewBag.ParticipantTypes"></select>
+                        </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
