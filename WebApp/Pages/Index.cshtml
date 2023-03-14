@@ -3,8 +3,69 @@
 @{
     ViewData["Title"] = "Home page";
 }
+<div class="container p-0">
+    <div class="row px-1">
+        
+        <div class="col-md-6 rik-banner-bg-color p-5 ">
+            <p class="text-white fs-3 fw-light py-3">
+                Sed nec elit vestibulum, <strong>tincidunt orci</strong> et, sagittis
+                ex. Vestibulum rutrum <strong>neque suscipit</strong> ante mattis maximus. Nulla non sapien <strong> viverra,
+            lobortis lorem non,</strong> accumsan metus.
+</p>
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+        </div>
+        <div class="col-md-6 px-0">
+            <img class="img-fluid" src="images/pilt.jpg" alt="Picture with bench under tree."
+                 style="min-width: 100%"/>
+        </div>
+        
+    </div>
+    <div class="row mt-4">
+        <div class="col p-0 px-1">
+            <p class="rik-banner-bg-color p-4 mb-0 text-center text-white fs-4 fw-light">Tulevased üritused</p>
+            <div class="p-4 bg-white position-relative div-min-height" >
+                @{
+                    int count = 1;
+                    foreach (var e in Model.UpcomingEvents)
+                    {
+                        <div class="row ">
+                            <div class="col-6">@String.Concat(count, ".") @e.Name</div>
+                            <div class="col-3">@e.EventStartTime.ToString("dd/MM/yyyy")</div>
+                            <div class="col-3 text-end">
+                                <a href="#" class="link-secondary fw-bold text-decoration-none">OSAVÕTJAD</a>
+                                <a href="#" class="link-secondary text-decoration-none px-1">X</a>
+                            </div>
+                        </div>
+        
+                        count++;
+                    }
+                    count = 1;
+                }
+                
+                <a id="BOTTOM" class="position-absolute bottom-0 mb-0 py-3 link-secondary text-decoration-none">LISA ÜRITUS</a>
+            </div>
+        </div>
+        <div class="col px-0 bg-white">
+            <p class="rik-banner-bg-color p-4 mb-0 text-center text-white fs-4 fw-light">Möödunud üritused</p>
+            <div class="p-4 bg-white div-min-height">
+                @{
+                    foreach (var e in Model.PastEvents)
+                    {
+                        <div class="row">
+                            <div class="col-6">@String.Concat(count, ".") @e.Name</div>
+                            <div class="col-3">@e.EventStartTime.ToString("dd/MM/yyyy")</div>
+                            <div class="col-3 text-end">
+                                <a href="#" class="link-secondary fw-bold text-decoration-none">OSAVÕTJAD</a>
+                                <a href="#" class="link-secondary text-decoration-none px-1">X</a>
+                            </div>
+                        </div>
+                        count++;
+                        
+                    }
+                }
+                
+            </div>
+        </div>
+    </div>
+    
 </div>

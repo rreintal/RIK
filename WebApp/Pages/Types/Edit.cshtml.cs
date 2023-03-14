@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using DAL;
 using Domain;
 
-namespace WebApp.Pages.Events
+namespace WebApp.Pages.Types
 {
     public class EditModel : PageModel
     {
@@ -21,25 +21,21 @@ namespace WebApp.Pages.Events
         }
 
         [BindProperty]
-        public Event Event { get; set; } = default!;
+        public ParticipantType ParticipantType { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(Guid? id)
         {
-            
-            
-            
-            
-            if (id == null || _context.Events == null)
+            if (id == null || _context.ParticipantTypes == null)
             {
                 return NotFound();
             }
 
-            var e =  await _context.Events.FirstOrDefaultAsync(m => m.Id == id);
-            if (e == null)
+            var participanttype =  await _context.ParticipantTypes.FirstOrDefaultAsync(m => m.Id == id);
+            if (participanttype == null)
             {
                 return NotFound();
             }
-            Event = e;
+            ParticipantType = participanttype;
             return Page();
         }
 
@@ -52,7 +48,7 @@ namespace WebApp.Pages.Events
                 return Page();
             }
 
-            _context.Attach(Event).State = EntityState.Modified;
+            _context.Attach(ParticipantType).State = EntityState.Modified;
 
             try
             {
@@ -60,7 +56,7 @@ namespace WebApp.Pages.Events
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!EventExists(Event.Id))
+                if (!ParticipantTypeExists(ParticipantType.Id))
                 {
                     return NotFound();
                 }
@@ -73,9 +69,9 @@ namespace WebApp.Pages.Events
             return RedirectToPage("./Index");
         }
 
-        private bool EventExists(Guid id)
+        private bool ParticipantTypeExists(Guid id)
         {
-          return (_context.Events?.Any(e => e.Id == id)).GetValueOrDefault();
+          return (_context.ParticipantTypes?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }

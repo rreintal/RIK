@@ -5,9 +5,8 @@
     ViewData["Title"] = "Create";
 }
 
-<h1>Create</h1>
+<h1>Loo uus üritus</h1>
 
-<h4>Event</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -24,8 +23,13 @@
                 <span asp-validation-for="Event.EventStartTime" class="text-danger"></span>
             </div>
             <div class="form-group">
+                            <label asp-for="Event.Place" class="control-label"></label>
+                            <input asp-for="Event.Place" class="form-control" />
+                            <span asp-validation-for="Event.Place" class="text-danger"></span>
+                        </div>
+            <div class="form-group">
                 <label asp-for="Event.Comment" class="control-label"></label>
-                <input asp-for="Event.Comment" class="form-control" />
+                <textarea asp-for="Event.Comment" class="form-control"> </textarea>
                 <span asp-validation-for="Event.Comment" class="text-danger"></span>
             </div>
             <div class="form-group">
