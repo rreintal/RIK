@@ -11,8 +11,10 @@ using Domain;
 
 namespace WebApp.Pages.Events
 {
+    
     public class CreateModel : PageModel
     {
+        
         private readonly DAL.ApplicationDbContext _context;
         private IEventRepository EventRepository;
 
