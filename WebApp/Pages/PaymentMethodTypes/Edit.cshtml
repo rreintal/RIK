@@ -1,5 +1,5 @@
 @page
-@model WebApp.Pages.Types.EditModel
+@model WebApp.Pages.PaymentMethodTypes.EditModel
 
 @{
     ViewData["Title"] = "Edit";
@@ -7,18 +7,18 @@
 
 <h1>Edit</h1>
 
-<h4>ParticipantType</h4>
+<h4>PaymentMethodType</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="ParticipantType.Name" class="control-label"></label>
-                <input asp-for="ParticipantType.Name" class="form-control" />
-                <span asp-validation-for="ParticipantType.Name" class="text-danger"></span>
+                <label asp-for="PaymentMethodType.Name" class="control-label"></label>
+                <input asp-for="PaymentMethodType.Name" class="form-control" />
+                <span asp-validation-for="PaymentMethodType.Name" class="text-danger"></span>
             </div>
-            <input type="hidden" asp-for="ParticipantType.Id" />
+            <input type="hidden" asp-for="PaymentMethodType.Id" />
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>

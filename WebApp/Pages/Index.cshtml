@@ -33,8 +33,8 @@
                             <div class="col-6">@String.Concat(count, ".") @e.Name</div>
                             <div class="col-3">@e.EventStartTime.ToString("dd/MM/yyyy")</div>
                             <div class="col-3 text-end">
-                                <a href="#" class="link-secondary fw-bold text-decoration-none">OSAVÕTJAD</a>
-                                <a href="#" class="link-secondary text-decoration-none px-1">X</a>
+                                <a href="http://localhost:5013/Events/AddParticipants?id=@e.Id" class="link-secondary fw-bold text-decoration-none">OSAVÕTJAD</a>
+                                <a href="http://localhost:5013/Events/Delete?id=@e.Id" class="link-secondary text-decoration-none px-1 fw-bold">X</a>
                             </div>
                         </div>
         
@@ -43,7 +43,7 @@
                     count = 1;
                 }
                 
-                <a id="BOTTOM" class="position-absolute bottom-0 mb-0 py-3 link-secondary text-decoration-none">LISA ÜRITUS</a>
+                <a href="/Events/Create" id="BOTTOM" class="position-absolute bottom-0 mb-0 py-3 link-secondary text-decoration-none">LISA ÜRITUS</a>
             </div>
         </div>
         <div class="col px-0 bg-white">
@@ -52,12 +52,12 @@
                 @{
                     foreach (var e in Model.PastEvents)
                     {
-                        <div class="row">
+                        <div class="row ">
                             <div class="col-6">@String.Concat(count, ".") @e.Name</div>
                             <div class="col-3">@e.EventStartTime.ToString("dd/MM/yyyy")</div>
                             <div class="col-3 text-end">
-                                <a href="#" class="link-secondary fw-bold text-decoration-none">OSAVÕTJAD</a>
-                                <a href="#" class="link-secondary text-decoration-none px-1">X</a>
+                                <a href="http://localhost:5013/Events/AddParticipants?id=@e.Id" class="link-secondary fw-bold text-decoration-none">OSAVÕTJAD</a>
+                                <a href="http://localhost:5013/Events/Delete?id=@e.Id" class="link-secondary text-decoration-none px-1 fw-bold">X</a>
                             </div>
                         </div>
                         count++;

@@ -1,18 +1,164 @@
 @page
+@using Domain
 @model WebApp.Pages.Participants.EditModel
 
 @{
     ViewData["Title"] = "Edit";
+    
+    string HideFormIfNeccessary(string typeName, string formType)
+    {
+        if (typeName == formType)
+        {
+            return "";
+        }
+        return "style=\"display:none\"";
+    }
 }
 
-<h1>Edit</h1>
 
-<h4>Participant</h4>
-<hr />
+<div class="row rik-banner-bg-color">
+    <div class="col-4 ">
+        <h1 class="fs-3 pt-3 text-white fw-lighter">Osavõtja info</h1>
+    </div>
+    <div class="col p-0" style="height: 75px; overflow: hidden;">
+        <img src="/images/libled.jpg">
+    </div>
+</div>
+<div class="row bg-white">
+    <div class="row justify-content-md-center pt-4 py-5">
+        <div class="col-md-2"></div>
+        <div class="col-md-8">
+            <h2 class="fs-4 rik-text-color fw-light">Osavõtja info</h2>
+            <form method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <select asp-for="Participant.ParticipantTypeId" class="form-control" asp-items="ViewBag.ParticipantTypeId" style="display: none"></select>
+                <div class="form-group row">
+                    <div class="col-sm-2 col-form-label">
+                    </div>
+                </div>
+                <div id="citizenForm" class="text-start" @Html.Raw(HideFormIfNeccessary(Model.Participant.ParticipantType!.Name, "Eraisik"))>
+
+                    <div class="form-group row">
+                        <label asp-for="Participant.FirstName" class="col-sm-2 col-form-label"></label>
+                        <div class="col-sm-7">
+                            <input asp-for="Participant.FirstName" class="form-control"/>
+                            <span asp-validation-for="Participant.FirstName" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group row my-2">
+                        <label asp-for="Participant.LastName" class="col-sm-2 col-form-label"></label>
+                        <div class="col-sm-7">
+                            <input asp-for="Participant.LastName" class="form-control"/>
+                            <span asp-validation-for="Participant.LastName" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group row my-2">
+                        <label asp-for="Participant.SocialsecurityNumber" class="col-sm-2 col-form-label"></label>
+                        <div class="col-sm-7">
+                            <input asp-for="Participant.SocialsecurityNumber" class="form-control"/>
+                            <span asp-validation-for="Participant.SocialsecurityNumber" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group row my-2">
+                        <label asp-for="Participant.PaymentMethodTypeId" class="col-sm-2 col-form-label"></label>
+                        <div class="col-sm-7">
+                            <select asp-for="Participant.PaymentMethodTypeId" class="form-control" asp-items="ViewBag.PaymentMethodTypeId"></select>
+                            <span asp-validation-for="Participant.PaymentMethodTypeId" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="inputPassword" class="col-sm-2 col-form-label">Lisainfo:</label>
+                        <div class="col-sm-7">
+                            <textarea type="" asp-for="Participant.Comment"  class="form-control" id="inputPassword" rows="5"></textarea>
+                        </div>
+                    </div>
+
+                </div>
+                <div id="corporationForm" @Html.Raw(HideFormIfNeccessary(Model.Participant.ParticipantType!.Name, "Juriidiline isik"))>
+                    <div class="form-group row my-2">
+                        <label asp-for="Participant.CorporationName" class="col-sm-2 col-form-label"></label>
+                        <div class="col-sm-7">
+                            <input asp-for="Participant.CorporationName" class="form-control"/>
+                            <span asp-validation-for="Participant.CorporationName" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group row my-2">
+                        <label asp-for="Participant.CorporationCode" class="col-sm-2 col-form-label"></label>
+                        <div class="col-sm-7">
+                            <input asp-for="Participant.CorporationCode" class="form-control"/>
+                            <span asp-validation-for="Participant.CorporationCode" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group row my-2">
+                        <label asp-for="Participant.CorporationParcitipationsCount" class="col-sm-2 col-form-label"></label>
+                        <div class="col-sm-7">
+                            <input asp-for="Participant.CorporationParcitipationsCount" class="form-control"/>
+                            <span asp-validation-for="Participant.CorporationParcitipationsCount" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group row my-2">
+                        <label asp-for="Participant.PaymentMethodTypeId" class="col-sm-2 col-form-label"></label>
+                        <div class="col-sm-7">
+                            <select asp-for="Participant.PaymentMethodTypeId" class="form-control" asp-items="ViewBag.PaymentMethodTypeId"></select>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="inputPassword" class="col-sm-2 col-form-label">Lisainfo:</label>
+                        <div class="col-sm-7">
+                            <textarea type="" asp-for="Participant.Comment"  class="form-control" id="inputPassword" rows="5"></textarea>
+                        </div>
+
+                    </div>
+                </div>
+                <div>
+                </div>
+                <input type="hidden" asp-for="Participant.Id"/>
+                <input type="hidden" asp-for="Participant.IsCompany"/>
+                <input type="hidden" asp-for="Participant.EventId">
+                <div id="buttons">
+                    <div class="row mt-5">
+                        <div class="col mx-3">
+                            <a href="/Events/AddParticipants?id=@Model.Participant.EventId" class="btn btn-secondary" role="button">Tagasi</a>
+                            <input type="submit" value="Salvesta" class="btn btn-primary"/>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>
+
+<!--
+ORIGINAAL
 <div class="row">
     <div class="col-md-4">
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="Participant.IsCompany" /> @Html.DisplayNameFor(model => model.Participant.IsCompany)
+                </label>
+            </div>
+            <div class="form-group">
+                <label asp-for="Participant.PaymentMethodTypeId" class="control-label"></label>
+                <select asp-for="Participant.PaymentMethodTypeId" class="form-control" asp-items="ViewBag.PaymentMethodTypeId"></select>
+                <span asp-validation-for="Participant.PaymentMethodTypeId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Participant.ParticipantTypeId" class="control-label"></label>
+                <select asp-for="Participant.ParticipantTypeId" class="form-control" asp-items="ViewBag.ParticipantTypeId"></select>
+                <span asp-validation-for="Participant.ParticipantTypeId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Participant.EventId" class="control-label"></label>
+                <select asp-for="Participant.EventId" class="form-control" asp-items="ViewBag.EventId"></select>
+                <span asp-validation-for="Participant.EventId" class="text-danger"></span>
+            </div>
             <div class="form-group">
                 <label asp-for="Participant.FirstName" class="control-label"></label>
                 <input asp-for="Participant.FirstName" class="form-control" />
@@ -56,10 +202,112 @@
     </div>
 </div>
 
-<div>
-    <a asp-page="./Index">Back to List</a>
-</div>
 
+MINU OMA ALL
+<div class="row justify-content-md-center pt-4 py-5">
+    <div class="col-md-2"></div>
+    <div class="col-md-8">
+        <h2 class="fs-4 rik-text-color fw-light">Osavõtja info</h2>
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group row">
+                <div class="col-sm-2 col-form-label">
+                </div>
+            </div>
+            <div id="citizenForm" class="text-start" >
+
+                <div class="form-group row">
+                    <label asp-for="Participant.FirstName" class="col-sm-2 col-form-label"></label>
+                    <div class="col-sm-7">
+                        <input asp-for="Participant.FirstName" class="form-control"/>
+                        <span asp-validation-for="Participant.FirstName" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group row my-2">
+                    <label asp-for="Participant.LastName" class="col-sm-2 col-form-label"></label>
+                    <div class="col-sm-7">
+                        <input asp-for="Participant.LastName" class="form-control"/>
+                        <span asp-validation-for="Participant.LastName" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group row my-2">
+                    <label asp-for="Participant.SocialsecurityNumber" class="col-sm-2 col-form-label"></label>
+                    <div class="col-sm-7">
+                        <input asp-for="Participant.SocialsecurityNumber" class="form-control"/>
+                        <span asp-validation-for="Participant.SocialsecurityNumber" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group row my-2">
+                    <label asp-for="Participant.PaymentMethodTypeId" class="col-sm-2 col-form-label"></label>
+                    <div class="col-sm-7">
+                        <select asp-for="Participant.PaymentMethodTypeId" class="form-control" asp-items="ViewBag.PaymentMethodTypeId"></select>
+                        <span asp-validation-for="Participant.PaymentMethodTypeId" class="text-danger"></span>
+                    </div>          
+                </div>
+                    <div class="form-group row">
+                        <label for="inputPassword" class="col-sm-2 col-form-label">Lisainfo:</label>
+                        <div class="col-sm-7">
+                            <textarea type="" asp-for="Participant.Comment"  class="form-control" id="inputPassword" rows="5"></textarea>
+                        </div>
+                    </div>
+
+                </div>
+                <div id="corporationForm" style="display: none">
+                    <div class="form-group row my-2">
+                        <label asp-for="Participant.CorporationName" class="col-sm-2 col-form-label"></label>
+                        <div class="col-sm-7">
+                            <input asp-for="Participant.CorporationName" class="form-control"/>
+                            <span asp-validation-for="Participant.CorporationName" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group row my-2">
+                        <label asp-for="Participant.CorporationCode" class="col-sm-2 col-form-label"></label>
+                        <div class="col-sm-7">
+                            <input asp-for="Participant.CorporationCode" class="form-control"/>
+                            <span asp-validation-for="Participant.CorporationCode" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group row my-2">
+                        <label asp-for="Participant.CorporationParcitipationsCount" class="col-sm-2 col-form-label"></label>
+                        <div class="col-sm-7">
+                            <input asp-for="Participant.CorporationParcitipationsCount" class="form-control"/>
+                            <span asp-validation-for="Participant.CorporationParcitipationsCount" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group row my-2">
+                        <label asp-for="Participant.PaymentMethodTypeId" class="col-sm-2 col-form-label"></label>
+                        <div class="col-sm-7">
+                            <select asp-for="Participant.PaymentMethodTypeId" class="form-control" asp-items="ViewBag.PaymentTypes"></select>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="inputPassword" class="col-sm-2 col-form-label">Lisainfo:</label>
+                        <div class="col-sm-7">
+                            <textarea type="" asp-for="Participant.Comment"  class="form-control" id="inputPassword" rows="5"></textarea>
+                        </div>
+
+                    </div>
+                </div>
+                <div>
+                </div>
+                <div id="buttons">
+                    <div class="row mt-5">
+                        <div class="col mx-3">
+                            <input type="button" value="Tagasi" class="btn btn-secondary"/>
+                            <input type="submit" value="Salvesta" class="btn btn-primary"/>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+    </div>
+
+-->
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }

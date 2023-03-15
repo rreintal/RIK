@@ -42,18 +42,26 @@
             </div>
         </div>
     </nav>
+    
     -->
     <nav class="container bg-white py-0 my-3 mb-3 ">
         <div class="row g-0">
             <div class="col">
-                <img class="py-4" src="/images/logo.svg" alt="Company logo spelled 'NULLAM'" />
+                <a asp-page="/Index">
+                <img class="py-4" src="/images/logo.svg" alt="Company logo spelled 'NULLAM'"/>
+                </a>
             </div>
             <div class="col gap-0">
                 <a asp-page="/Index" class="text-decoration-none">
-                    <button class="rik-btn @( ViewData["currentPage"]!.Equals("Index") ? "rik-btn-primary" : "" )">AVALEHT</button>
+                    <button class="rik-btn rik-btn-primary">AVALEHT</button>
                 </a>
                 <a asp-page="/Events/Create">
-                <button class="rik-btn @( ViewData["currentPage"]!.Equals("createEvent") ? "rik-btn-primary" : "" )">ÜRITUSE LISAMINE</button>
+                    <button class="rik-btn ">ÜRITUSE LISAMINE</button>
+                    @{
+                            /*
+                             * @( ViewData["currentPage"]!.Equals("createEvent") ? "rik-btn-primary" : "" )
+                             */
+                        }
                 </a>
             </div>
             <div class="col text-end py-3">

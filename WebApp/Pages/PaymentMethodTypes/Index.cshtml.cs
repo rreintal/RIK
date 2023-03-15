@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using DAL;
 using Domain;
 
-namespace WebApp.Pages.Participants
+namespace WebApp.Pages.PaymentMethodTypes
 {
     public class IndexModel : PageModel
     {
@@ -19,13 +19,13 @@ namespace WebApp.Pages.Participants
             _context = context;
         }
 
-        public IList<Participant> Participant { get;set; } = default!;
+        public IList<PaymentMethodType> PaymentMethodType { get;set; } = default!;
 
         public async Task OnGetAsync()
         {
-            if (_context.Participants != null)
+            if (_context.PaymentMethodTypes != null)
             {
-                Participant = await _context.Participants.ToListAsync();
+                PaymentMethodType = await _context.PaymentMethodTypes.ToListAsync();
             }
         }
     }

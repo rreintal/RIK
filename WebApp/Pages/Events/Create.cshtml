@@ -34,7 +34,7 @@
             <div class="form-group row m-1">
                 <label asp-for="Event.EventStartTime" class="col-sm-2 col-form-label"></label>
                 <div class="col">
-                    <input asp-for="Event.EventStartTime" class="form-control"/>
+                    <input asp-for="Event.EventStartTime" class="form-control" placeholder="pp-kk-aaaa, hh: ss"/>
                     <span asp-validation-for="Event.EventStartTime" class="text-danger"></span>
                 </div>
             </div>
@@ -55,88 +55,13 @@
             </div>
             <div class="row mt-5">
                 <div class="col mx-3">
-                    <input type="button" value="Tagasi" class="btn btn-secondary"/>
+                    <a href="../Index" class="btn btn-secondary" role="button">Tagasi</a>
                     <input type="submit" value="Lisa" class="btn btn-primary"/>
                 </div>
             </div>
         </form>
     </div>
 </div>
-
-<!-- 
-TÖÖTAB AGA NOT REALLY
-<div class="d-flex justify-content-center bg-danger">
-        <form method="post" class="w-50 py-5">
-            <h2 class="fw-light">Ürituse lisamine</h2>
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Event.Name" class="control-label"></label>
-                <input asp-for="Event.Name" class="form-control"/>
-                <span asp-validation-for="Event.Name" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Event.EventStartTime" class="control-label"></label>
-                <input asp-for="Event.EventStartTime" class="form-control"/>
-                <span asp-validation-for="Event.EventStartTime" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Event.Place" class="control-label"></label>
-                <input asp-for="Event.Place" class="form-control"/>
-                <span asp-validation-for="Event.Place" class="text-danger"></span>
-            </div>
-            <div class="form-group" >
-                <label asp-for="Event.Comment" class="control-label"></label>
-                <textarea asp-for="Event.Comment" rows="7" class="form-control"> </textarea>
-                <span asp-validation-for="Event.Comment" class="text-danger"></span>
-            </div>
-            <div class="d-flex gap-2 justify-content-start mt-3">
-                <div class="form-group">
-                    <input type="button" value="Tagasi" class="btn btn-secondary"/>
-                </div>
-                <div class="form-group ">
-                    <input type="submit" value="Lisa" class="btn btn-primary"/>
-                </div>
-            </div>
-        </form>
-
-    </div>
--->
-
-
-<!-- 
-ORIGINAAL
-<div class="row">
-        <div class="col">
-            <form method="post">
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <div class="form-group">
-                    <label asp-for="Event.Name" class="control-label"></label>
-                    <input asp-for="Event.Name" class="form-control" />
-                    <span asp-validation-for="Event.Name" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Event.EventStartTime" class="control-label"></label>
-                    <input asp-for="Event.EventStartTime" class="form-control" />
-                    <span asp-validation-for="Event.EventStartTime" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                                <label asp-for="Event.Place" class="control-label"></label>
-                                <input asp-for="Event.Place" class="form-control" />
-                                <span asp-validation-for="Event.Place" class="text-danger"></span>
-                            </div>
-                <div class="form-group">
-                    <label asp-for="Event.Comment" class="control-label"></label>
-                    <textarea asp-for="Event.Comment" class="form-control"> </textarea>
-                    <span asp-validation-for="Event.Comment" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <input type="submit" value="Create" class="btn btn-primary" />
-                </div>
-            </form>
-        </div>
-    </div>
--->
-
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

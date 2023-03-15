@@ -1,5 +1,5 @@
 @page
-@model WebApp.Pages.Types.IndexModel
+@model WebApp.Pages.PaymentMethodTypes.IndexModel
 
 @{
     ViewData["Title"] = "Index";
@@ -14,13 +14,13 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.ParticipantType[0].Name)
+                @Html.DisplayNameFor(model => model.PaymentMethodType[0].Name)
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model.ParticipantType) {
+@foreach (var item in Model.PaymentMethodType) {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Name)

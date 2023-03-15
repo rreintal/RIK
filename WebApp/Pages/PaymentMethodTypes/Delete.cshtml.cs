@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using DAL;
 using Domain;
 
-namespace WebApp.Pages.Types
+namespace WebApp.Pages.PaymentMethodTypes
 {
     public class DeleteModel : PageModel
     {
@@ -20,40 +20,40 @@ namespace WebApp.Pages.Types
         }
 
         [BindProperty]
-      public ParticipantType ParticipantType { get; set; } = default!;
+      public PaymentMethodType PaymentMethodType { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(Guid? id)
         {
-            if (id == null || _context.ParticipantTypes == null)
+            if (id == null || _context.PaymentMethodTypes == null)
             {
                 return NotFound();
             }
 
-            var participanttype = await _context.ParticipantTypes.FirstOrDefaultAsync(m => m.Id == id);
+            var paymentmethodtype = await _context.PaymentMethodTypes.FirstOrDefaultAsync(m => m.Id == id);
 
-            if (participanttype == null)
+            if (paymentmethodtype == null)
             {
                 return NotFound();
             }
             else 
             {
-                ParticipantType = participanttype;
+                PaymentMethodType = paymentmethodtype;
             }
             return Page();
         }
 
         public async Task<IActionResult> OnPostAsync(Guid? id)
         {
-            if (id == null || _context.ParticipantTypes == null)
+            if (id == null || _context.PaymentMethodTypes == null)
             {
                 return NotFound();
             }
-            var participanttype = await _context.ParticipantTypes.FindAsync(id);
+            var paymentmethodtype = await _context.PaymentMethodTypes.FindAsync(id);
 
-            if (participanttype != null)
+            if (paymentmethodtype != null)
             {
-                ParticipantType = participanttype;
-                _context.ParticipantTypes.Remove(ParticipantType);
+                PaymentMethodType = paymentmethodtype;
+                _context.PaymentMethodTypes.Remove(PaymentMethodType);
                 await _context.SaveChangesAsync();
             }
 

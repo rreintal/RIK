@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using DAL;
 using Domain;
 
-namespace WebApp.Pages.Types
+namespace WebApp.Pages.PaymentMethodTypes
 {
     public class EditModel : PageModel
     {
@@ -21,21 +21,21 @@ namespace WebApp.Pages.Types
         }
 
         [BindProperty]
-        public ParticipantType ParticipantType { get; set; } = default!;
+        public PaymentMethodType PaymentMethodType { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(Guid? id)
         {
-            if (id == null || _context.ParticipantTypes == null)
+            if (id == null || _context.PaymentMethodTypes == null)
             {
                 return NotFound();
             }
 
-            var participanttype =  await _context.ParticipantTypes.FirstOrDefaultAsync(m => m.Id == id);
-            if (participanttype == null)
+            var paymentmethodtype =  await _context.PaymentMethodTypes.FirstOrDefaultAsync(m => m.Id == id);
+            if (paymentmethodtype == null)
             {
                 return NotFound();
             }
-            ParticipantType = participanttype;
+            PaymentMethodType = paymentmethodtype;
             return Page();
         }
 
@@ -48,7 +48,7 @@ namespace WebApp.Pages.Types
                 return Page();
             }
 
-            _context.Attach(ParticipantType).State = EntityState.Modified;
+            _context.Attach(PaymentMethodType).State = EntityState.Modified;
 
             try
             {
@@ -56,7 +56,7 @@ namespace WebApp.Pages.Types
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!ParticipantTypeExists(ParticipantType.Id))
+                if (!PaymentMethodTypeExists(PaymentMethodType.Id))
                 {
                     return NotFound();
                 }
@@ -69,9 +69,9 @@ namespace WebApp.Pages.Types
             return RedirectToPage("./Index");
         }
 
-        private bool ParticipantTypeExists(Guid id)
+        private bool PaymentMethodTypeExists(Guid id)
         {
-          return (_context.ParticipantTypes?.Any(e => e.Id == id)).GetValueOrDefault();
+          return (_context.PaymentMethodTypes?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }

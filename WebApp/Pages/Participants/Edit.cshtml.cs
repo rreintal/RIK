@@ -36,6 +36,9 @@ namespace WebApp.Pages.Participants
                 return NotFound();
             }
             Participant = participant;
+           ViewData["EventId"] = new SelectList(_context.Events, "Id", "Name");
+           ViewData["ParticipantTypeId"] = new SelectList(_context.ParticipantTypes, "Id", "Name");
+           ViewData["PaymentMethodTypeId"] = new SelectList(_context.PaymentMethodTypes, "Id", "Name");
             return Page();
         }
 

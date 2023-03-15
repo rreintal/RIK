@@ -11,38 +11,216 @@
     <title></title>
 </head>
 <body>
+<div class="row bg-white">
 <div >
-    <div>
-        @{
-            if (Model.Event != null)
-            {
-                <p>Nimi: @Model.Event.Name</p>
-                <p>Koht: @Model.Event.Place</p>
-                if (Model.Event.EventParticipants != null)
-                {
-                    <h2>Osalejad</h2>
-                    foreach (var participant in Model.Event.EventParticipants!)
-                    {
-                        <p>@participant.FirstName @participant.LastName</p>
-                    }    
-                }
+    <div class="row rik-banner-bg-color">
+        <div class="col-4 ">
+            <h1 class="fs-3 pt-3 text-white fw-lighter">Osavõtjad</h1>
+        </div>
+        <div class="col p-0" style="height: 75px; overflow: hidden;">
+            <img src="/images/libled.jpg">
+        </div>
+    </div>
+
+
+
+    <div class="row bg-white justify-content-md-center pt-4">
+        <div class="col-md-2"></div>
+        <div class="col-md-8">
+            <div>
+                <h2 class="fs-4 rik-text-color fw-light">Osavõtjad</h2>
+                <div id="eventInfoTab">
+
+                    <div class="form-group row">
+                        <label for="staticEmail" class="col-sm-3 col-form-label">Ürituse nimi:</label>
+                        <div class="col-sm-9">
+                            <input type="text" readonly class="form-control-plaintext" id="staticEmail" value="@Model.Event.Name">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="staticEmail" class="col-sm-3 col-form-label">Toimumisaeg:</label>
+                        <div class="col-sm-9">
+                            <input type="text" readonly class="form-control-plaintext" id="staticEmail" value="@Model.Event.EventStartTime.ToString("dd.MM.yyyy")">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="staticEmail" class="col-sm-3 col-form-label">Koht:</label>
+                        <div class="col-sm-9">
+                            <input type="text" readonly class="form-control-plaintext" id="staticEmail" value="@Model.Event.Place">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="staticEmail" class="col-sm-3 col-form-label">Osavõtjad:</label>
+                        <div class="col-sm-9 pt-4">
+                            @{
+                                int c = 1;
+                                foreach (var p in Model.EventParticipants)
+                                {
+                                    var name = "";
+                                    var code_id = "";
+                                    if (p.ParticipantType!.Name == "Eraisik")
+                                    {
+                                        name = $"{p.FirstName} {p.LastName}";
+                                        code_id = p.SocialsecurityNumber;
+                                    }
+                                    else
+                                    {
+                                        // juriidiline isik
+                                        name = p.CorporationName;
+                                        code_id = p.CorporationCode;
+                                    }
+                                    
+                                    <div class="row">
+                                        <div class="col">@c.@name </div>
+                                        <div class="col">@code_id</div>
+                                        <div class="col">
+                                            <a href="/Participants/Edit?id=@p.Id" class="link-secondary fw-bold text-decoration-none px-4">VAATA</a>
+                                        </div>
+                                        <div class="col">
+                                            <a href="/Participants/Delete?id=@p.Id" class="link-secondary fw-bold text-decoration-none">KUSTUTA</a>
+                                        </div>
+                                    </div>
+                                    c++;
+                                }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+    <div class="row justify-content-md-center pt-4 py-5">
+        <div class="col-md-2"></div>
+        <div class="col-md-8">
+            <h2 class="fs-4 rik-text-color fw-light">Osavõtjate lisamine</h2>
+            <form method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="Participant.EventId" value="@Model.EventId"/>
                 
-            }}
+            <div class="form-group row">
+                <div class="col-sm-2 col-form-label">
+                </div>
+                <div class="col py-3">
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="Participant.IsCompany" asp-for="Participant.IsCompany" id="citizenCheckbox" value="false" checked>
+                        <label class="form-check-label" for="inlineRadio1">Eraklient</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="Participant.IsCompany" id="corporationCheckbox" asp-for="Participant.IsCompany" value="true">
+                        <label class="form-check-label" for="inlineRadio2">Juriidiline isik</label>
+                    </div>
+                </div>
+            </div>
+                <div id="citizenForm" class="text-start">
+                    
+                    <div class="form-group row">
+                        <label asp-for="Participant.FirstName" class="col-sm-2 col-form-label"></label>
+                        <div class="col-sm-7">
+                            <input asp-for="Participant.FirstName" class="form-control"/>
+                            <span asp-validation-for="Participant.FirstName" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group row my-2">
+                        <label asp-for="Participant.LastName" class="col-sm-2 col-form-label"></label>
+                        <div class="col-sm-7">
+                            <input asp-for="Participant.LastName" class="form-control"/>
+                            <span asp-validation-for="Participant.LastName" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group row my-2">
+                        <label asp-for="Participant.SocialsecurityNumber" class="col-sm-2 col-form-label"></label>
+                        <div class="col-sm-7">
+                            <input asp-for="Participant.SocialsecurityNumber" class="form-control"/>
+                            <span asp-validation-for="Participant.SocialsecurityNumber" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group row my-2">
+                        <label asp-for="Participant.PaymentMethodTypeId" class="col-sm-2 col-form-label"></label>
+                        <div class="col-sm-7">
+                            <select asp-for="Participant.PaymentMethodTypeId" class="form-control" asp-items="ViewBag.PaymentTypes"></select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="inputPassword" class="col-sm-2 col-form-label">Lisainfo:</label>
+                        <div class="col-sm-7">
+                            <textarea type="" asp-for="Participant.Comment"  class="form-control" id="inputPassword" rows="5"></textarea>
+                        </div>
+                    </div>
+
+                </div>
+            <div id="corporationForm">
+                <div class="form-group row my-2">
+                    <label asp-for="Participant.CorporationName" class="col-sm-2 col-form-label"></label>
+                    <div class="col-sm-7">
+                        <input asp-for="Participant.CorporationName" class="form-control"/>
+                        <span asp-validation-for="Participant.CorporationName" class="text-danger"></span>
+                    </div>
+                </div>
+                
+                <div class="form-group row my-2">
+                    <label asp-for="Participant.CorporationCode" class="col-sm-2 col-form-label"></label>
+                    <div class="col-sm-7">
+                        <input asp-for="Participant.CorporationCode" class="form-control"/>
+                        <span asp-validation-for="Participant.CorporationCode" class="text-danger"></span>
+                    </div>
+                </div>
+                
+                <div class="form-group row my-2">
+                    <label asp-for="Participant.CorporationParcitipationsCount" class="col-sm-2 col-form-label"></label>
+                    <div class="col-sm-7">
+                        <input asp-for="Participant.CorporationParcitipationsCount" class="form-control"/>
+                        <span asp-validation-for="Participant.CorporationParcitipationsCount" class="text-danger"></span>
+                    </div>
+                </div>
+                
+                <div class="form-group row my-2">
+                    <label asp-for="Participant.PaymentMethodTypeId"  class="col-sm-2 col-form-label"></label>
+                    <div class="col-sm-7">
+                        <select asp-for="Participant.PaymentMethodTypeId" class="form-control" asp-items="ViewBag.PaymentTypes"></select>
+                    </div>
+                </div>
+                
+                <div class="form-group row">
+                    <label for="inputPassword" class="col-sm-2 col-form-label">Lisainfo:</label>
+                    <div class="col-sm-7">
+                        <textarea type="" asp-for="Participant.Comment"  class="form-control" id="inputPassword" rows="5"></textarea>
+                    </div>
+
+                </div>
+            </div>
+            <div>
+            </div>
+            <div id="buttons">
+                <div class="row mt-5">
+                    <div class="col mx-3">
+                        <a href="../Index" class="btn btn-secondary" role="button">Tagasi</a>
+                        <input type="submit" value="Lisa" class="btn btn-primary"/>
+                    </div>
+                </div>
+            </div>
+            </form>
+        </div>
+
+    </div>
+
+</div>
+</div>
+<!-- 
+
+<form method="post">
+    <div class="row">
+        <div class="col-1">
+            <p>Eraklient</p>
+            <input type="radio" id="citizenCheckbox" checked name="formFilter"></input>
+        </div>
+        <div class="col-2">
+            <p>Juriidiline isik</p>
+            <input type="radio" id="corporationCheckbox" name="formFilter"></input>        
+        </div>
             
     </div>
-    <form method="post">
-        <div class="row">
-            <div class="col-1">
-                <p>Eraklient</p>
-                <input type="radio" id="citizenCheckbox" checked name="formFilter"></input>
-            </div>
-            <div class="col-2">
-                <p>Juriidiline isik</p>
-                <input type="radio" id="corporationCheckbox" name="formFilter"></input>        
-            </div>
-            
-        </div>
-        <div id="formContainer" class="col-4">
+    <div id="formContainer" class="col-4">
         <div id="citizenForm">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
@@ -79,12 +257,13 @@
                 <span asp-validation-for="Participant.CorporationParcitipationsCount" class="text-danger"></span>
             </div>
         </div>
-        </div>
-        <input type="submit" value="Lisa" class="btn btn-primary" />
-    </form>
-</div>
-
+    </div>
+    <input type="submit" value="Lisa" class="btn btn-primary" />
+</form> 
+-->
 <script>
+
+
 const citizenCheckbox = document.getElementById('citizenCheckbox')
 const corporationCheckbox = document.getElementById('corporationCheckbox')
 
@@ -105,9 +284,21 @@ corporationForm.style.display = "none";
     citizenForm.style.display = "none";
     corporationForm.style.display = "block";
   });
-
-
-
+ 
+  /*
+  const queryString = window.location.search;
+  const urlParams = new URLSearchParams(queryString);
+  const status = urlParams.get('status');
+  if (status === "failed") {
+      const errors = [];
+      let fullErrorString = urlParams.get("errors")
+      // errorid tulevad ühe kaupa max!
+      alert(fullErrorString)
+      }
+      
+   */
 </script>
+
+
 </body>
 </html>
