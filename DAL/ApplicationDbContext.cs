@@ -11,10 +11,14 @@ public class ApplicationDbContext : DbContext
     public DbSet<ParticipantType> ParticipantTypes { get; set; } = default!;
 
     public DbSet<PaymentMethodType> PaymentMethodTypes { get; set; } = default!;
+
+    //public DbSet<PaymentMethodType> PaymentMethodTypes { get; set; } = default!;
     
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
         : base(options)
     {
     }
     
+
+
 }
