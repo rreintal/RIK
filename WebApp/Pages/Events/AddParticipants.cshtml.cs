@@ -115,7 +115,7 @@ public class AddParticipants : PageModel
         _context.Participants.Add(Participant);
         _context.SaveChanges();
 
-        return RedirectToPage("../Index");
+        return RedirectToPage($"../Index");
     }
 
 }

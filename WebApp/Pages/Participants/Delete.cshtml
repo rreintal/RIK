@@ -3,7 +3,7 @@
 
 @{
     ViewData["Title"] = "Delete";
-    
+    ViewData["currentPage"] = "none";
     
 }
 <div class="row bg-white">
@@ -86,7 +86,7 @@
 
                 <form method="post" class="my-4">
                     <input type="hidden" asp-for="Participant.Id"/>
-                    <a href="../Index" class="btn btn-secondary" role="button">Tagasi</a>
+                    <a href="/Events/AddParticipants?id=@Model.Participant.EventId" class="btn btn-secondary" role="button">Tagasi</a>
                     <input type="submit" value="Kustuta" class="btn btn-danger"/>
                 </form>
             </div>
