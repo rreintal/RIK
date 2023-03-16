@@ -16,7 +16,6 @@ public class ParticipantRepository : IParticipantRepository
     {
         return _dbContext.Participants
             .Where(x => x.Id == id)
-            .Include(x => x.PaymentMethodTypeId)
             .First();
     }
 

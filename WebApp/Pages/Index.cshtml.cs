@@ -18,9 +18,7 @@ public class IndexModel : PageModel
     public List<Event> PastEvents = default!;
     
     public List<Event> UpcomingEvents = default!;
-
-    public Dictionary<Event, List<Participant>> EventWithAttendants = new Dictionary<Event, List<Participant>>();
-
+    
 
 
     public IndexModel(IEventRepository eventRepository, IParticipantRepository participantRepository)
