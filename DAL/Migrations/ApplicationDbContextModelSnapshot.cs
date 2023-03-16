@@ -106,6 +106,18 @@ namespace DAL.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("ParticipantTypes");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("d396c1d7-1420-4afe-aba9-fcf0c6465b56"),
+                            Name = "Eraisik"
+                        },
+                        new
+                        {
+                            Id = new Guid("176155cf-9f2b-4f18-9ec7-00c89de7ddec"),
+                            Name = "Juriidiline isik"
+                        });
                 });
 
             modelBuilder.Entity("Domain.PaymentMethodType", b =>
@@ -121,6 +133,18 @@ namespace DAL.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("PaymentMethodTypes");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("dbc51692-f526-47dc-a8e8-4116aa543929"),
+                            Name = "Sularaha"
+                        },
+                        new
+                        {
+                            Id = new Guid("d30069f1-d964-4835-a22d-daec0662c86c"),
+                            Name = "Ülekanne"
+                        });
                 });
 
             modelBuilder.Entity("Domain.Participant", b =>

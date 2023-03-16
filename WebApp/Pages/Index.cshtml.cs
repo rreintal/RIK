@@ -28,6 +28,7 @@ public class IndexModel : PageModel
         _eventRepository = eventRepository;
         _participantRepository = participantRepository;
         // Events pole vaja sest past + upcoming = events
+        
         PastEvents = eventRepository.GetAllPastEvents();
         Events = eventRepository.GetAllEvents();
 

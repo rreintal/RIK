@@ -14,7 +14,7 @@ public interface IEventRepository
     
     public void DeleteEventById(Guid id);
 
-    public List<Event> GetAllPastEvents();
+    public List<Event>? GetAllPastEvents();
 
-    public List<Event> GetAllUpcomingEvents();
+    public List<Event>? GetAllUpcomingEvents();
 }

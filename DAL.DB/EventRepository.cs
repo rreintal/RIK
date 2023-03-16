@@ -42,12 +42,20 @@ public class EventRepository : IEventRepository
     public List<Event> GetAllPastEvents()
     {
         var events = _dbContext.Events.Where(x => x.EventStartTime < DateTime.Now).ToList();
+        if (events.Count == 0)
+        {
+            return new List<Event>();
+        }
         return events;
     }
 
     public List<Event> GetAllUpcomingEvents()
     {
         var events = _dbContext.Events.Where(x => x.EventStartTime > DateTime.Now).ToList();
+        if (events.Count == 0)
+        {
+            return new List<Event>();
+        }
         return events;
     }
 }

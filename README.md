@@ -16,6 +16,7 @@
   ```
 
 - .NET SDK 7.0.12
+- Entity Framework Core 7.0.1
 - xUnit 7.0
 
 ## Setup
@@ -39,6 +40,8 @@ Do same thing in `appsettings.json`
     "DefaultConnection": "DataSource=LOCATION.db;Cache=Shared"
   }
 ```
+
+**MAKE SURE BOTH DB LOCATIONS MATCH AND HAVE .db EXTENSION!!**
 
 3. Now everything is set up and now you can run the code.
 
