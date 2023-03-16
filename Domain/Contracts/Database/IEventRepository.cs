@@ -9,6 +9,8 @@ public interface IEventRepository
     public List<Event> GetAllEvents();
     
     public void AddEvent(Event e);
+
+    public void DeleteEvent(Event e);
     
     public void DeleteEventById(Guid id);
 

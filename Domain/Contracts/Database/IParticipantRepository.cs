@@ -11,4 +11,6 @@ public interface IParticipantRepository
     public void RemoveParticipantById(Guid id);
 
     public void AddParticipant(Participant participant);
+
+    public void DeleteParticipant(Participant p);
 }

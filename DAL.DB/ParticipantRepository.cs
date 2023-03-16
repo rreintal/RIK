@@ -1,4 +1,5 @@
 using Domain;
+using Microsoft.EntityFrameworkCore;
 
 namespace DAL.DB;
 
@@ -13,12 +14,14 @@ public class ParticipantRepository : IParticipantRepository
     
     public Participant GetParticipantById(Guid id)
     {
-        throw new NotImplementedException();
+        return _dbContext.Participants
+            .Where(x => x.Id == id)
+            .Include(x => x.PaymentMethodTypeId)
+            .First();
     }
 
     public List<Participant> GetParticipantsByEvent(Event e)
     {
-        // ERROR HANDLING
         var id = e.Id;
         var result = _dbContext.Participants.Where(i => i.EventId == e.Id).ToList();
         return result;
@@ -26,11 +29,19 @@ public class ParticipantRepository : IParticipantRepository
 
     public void RemoveParticipantById(Guid id)
     {
-        throw new NotImplementedException();
+        _dbContext.Participants.Remove(GetParticipantById(id));
+        _dbContext.SaveChanges();
     }
 
     public void AddParticipant(Participant participant)
     {
-        throw new NotImplementedException();
+        _dbContext.Participants.Add(participant);
+        _dbContext.SaveChanges();
+    }
+
+    public void DeleteParticipant(Participant p)
+    {
+        _dbContext.Participants.Remove(p);
+        _dbContext.SaveChanges();
     }
 }

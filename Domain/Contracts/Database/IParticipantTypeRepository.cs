@@ -1,6 +1,10 @@
+using Domain;
+
 namespace DAL;
 
-public class IParticipantTypeRepository
+public interface IParticipantTypeRepository
 {
+    public ParticipantType GetParticipantTypeByName(string name);
+    
     
 }

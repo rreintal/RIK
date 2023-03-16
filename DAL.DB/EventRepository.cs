@@ -15,7 +15,7 @@ public class EventRepository : IEventRepository
     
     public Event GetEventById(Guid id)
     {
-        throw new NotImplementedException();
+        return _dbContext.Events.First(x => x.Id == id);
     }
 
     public List<Event> GetAllEvents()
@@ -25,12 +25,18 @@ public class EventRepository : IEventRepository
 
     public void AddEvent(Event e)
     {
-        throw new NotImplementedException();
+        _dbContext.Events.Add(e);
+    }
+
+    public void DeleteEvent(Event e)
+    {
+        _dbContext.Remove(e);
     }
 
     public void DeleteEventById(Guid id)
     {
-        throw new NotImplementedException();
+        _dbContext.Events.Remove(GetEventById(id));
+        _dbContext.SaveChanges();
     }
 
     public List<Event> GetAllPastEvents()
