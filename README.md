@@ -2,7 +2,7 @@
 
 ## Prerequisites
 
-- Project NuGet packages
+- Project NuGet packages (all packages must be v7.0.1)
 
   ```
   Microsoft.EntityFrameworkCore
