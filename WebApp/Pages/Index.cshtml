@@ -30,7 +30,10 @@
                     foreach (var e in Model.UpcomingEvents)
                     {
                         <div class="row ">
-                            <div class="col-6">@String.Concat(count, ".") @e.Name</div>
+                            <div class="col-6">
+                                <a class="text-decoration-none text-black" href="http://localhost:5013/Events/AddParticipants?id=@e.Id" >@String.Concat(count, ".") @e.Name</a>
+                            </div>
+                            
                             <div class="col-3">@e.EventStartTime.ToString("dd/MM/yyyy")</div>
                             <div class="col-3 text-end">
                                 <a href="http://localhost:5013/Events/AddParticipants?id=@e.Id" class="link-secondary fw-bold text-decoration-none">OSAVÕTJAD</a>
@@ -53,7 +56,9 @@
                     foreach (var e in Model.PastEvents)
                     {
                         <div class="row ">
-                            <div class="col-6">@String.Concat(count, ".") @e.Name</div>
+                            <div class="col-6">
+                                <a class="text-decoration-none text-black" href="http://localhost:5013/Events/AddParticipants?id=@e.Id" >@String.Concat(count, ".") @e.Name</a>
+                            </div>
                             <div class="col-3">@e.EventStartTime.ToString("dd/MM/yyyy")</div>
                             <div class="col-3 text-end">
                                 <a href="http://localhost:5013/Events/AddParticipants?id=@e.Id" class="link-secondary fw-bold text-decoration-none">OSAVÕTJAD</a>

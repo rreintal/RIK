@@ -56,7 +56,7 @@ public class AddParticipants : PageModel
             .ToList();
         
 
-            ViewData["PaymentTypes"] = new SelectList(_context.PaymentMethodTypes, "Id", "Name");
+        ViewData["PaymentTypes"] = new SelectList(_context.PaymentMethodTypes, "Id", "Name");
         
         if (id == null || _context.Events == null)
         {
@@ -98,17 +98,24 @@ public class AddParticipants : PageModel
         
         if (!ModelState.IsValid)
         {
+            var errorString = "";
             foreach (var error in ModelState.Values.SelectMany(v => v.Errors))
             {
                 // Display the error message to the user
                 string errorMessage = error.ErrorMessage;
                 // Alternatively, you can access the formatted error message using error.Exception.Message
                 Console.WriteLine(errorMessage);
+                errorString = errorMessage;
             }
 
-
-
-            return Redirect($"./AddParticipants?id={id}&status=failed");
+            // et õige form oleks avatud!
+            if (Participant.IsCompany)
+            {
+                return Redirect($"./AddParticipants?id={id}&status=failed&errors={errorString}&formtype=corporation");
+                //return Redirect($"./AddParticipants?id={id}&status=failed&formtype=corporation");    
+            }
+            return Redirect($"./AddParticipants?id={id}&status=failed&errors={errorString}");
+            
         }
 
         

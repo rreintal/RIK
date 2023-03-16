@@ -3,6 +3,7 @@
 @{
     ViewData["Title"] = "Edit";
     ViewData["currentPage"] = "none";
+
 }
 
 <!DOCTYPE html>
@@ -104,11 +105,13 @@
                 </div>
                 <div class="col py-3">
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="Participant.IsCompany" asp-for="Participant.IsCompany" id="citizenCheckbox" value="false" checked>
+                        <input class="form-check-input" type="radio" name="Participant.IsCompany" asp-for="Participant.IsCompany" id="citizenCheckbox" value="false"
+                               checked>
                         <label class="form-check-label" for="inlineRadio1">Eraklient</label>
                     </div>
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="Participant.IsCompany" id="corporationCheckbox" asp-for="Participant.IsCompany" value="true">
+                        <input class="form-check-input" type="radio" name="Participant.IsCompany" id="corporationCheckbox" asp-for="Participant.IsCompany" value="true" 
+                               >
                         <label class="form-check-label" for="inlineRadio2">Juriidiline isik</label>
                     </div>
                 </div>
@@ -207,63 +210,16 @@
 
 </div>
 </div>
-<!-- 
-
-<form method="post">
-    <div class="row">
-        <div class="col-1">
-            <p>Eraklient</p>
-            <input type="radio" id="citizenCheckbox" checked name="formFilter"></input>
-        </div>
-        <div class="col-2">
-            <p>Juriidiline isik</p>
-            <input type="radio" id="corporationCheckbox" name="formFilter"></input>        
-        </div>
-            
-    </div>
-    <div id="formContainer" class="col-4">
-        <div id="citizenForm">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Participant.FirstName" class="control-label"></label>
-                <input asp-for="Participant.FirstName" class="form-control"/>
-                <span asp-validation-for="Participant.FirstName" class="text-danger"></span>
-            </div>
-            
-            <div class="form-group">
-                <label asp-for="Participant.LastName" class="control-label"></label>
-                <input asp-for="Participant.LastName" class="form-control"/>
-                <span asp-validation-for="Participant.LastName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Participant.SocialsecurityNumber" class="control-label"></label>
-                <input asp-for="Participant.SocialsecurityNumber" class="form-control"/>
-                <span asp-validation-for="Participant.SocialsecurityNumber" class="text-danger"></span>
-            </div>
-        </div>
-        <div id="corporationForm">
-            <div class="form-group">
-                <label asp-for="Participant.CorporationCode" class="control-label"></label>
-                <input asp-for="Participant.CorporationCode" class="form-control"/>
-                <span asp-validation-for="Participant.CorporationCode" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Participant.CorporationName" class="control-label"></label>
-                <input asp-for="Participant.CorporationName" class="form-control"/>
-                <span asp-validation-for="Participant.CorporationName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Participant.CorporationParcitipationsCount" class="control-label"></label>
-                <input asp-for="Participant.CorporationParcitipationsCount" class="form-control"/>
-                <span asp-validation-for="Participant.CorporationParcitipationsCount" class="text-danger"></span>
-            </div>
-        </div>
-    </div>
-    <input type="submit" value="Lisa" class="btn btn-primary" />
-</form> 
--->
 <script>
+function replaceChars(str) {
+  // Replace all occurrences of "2" with "ä"
+  str = str.replace(/2/g, "ä");
+  
+  // Replace all occurrences of "6" with "õ"
+  str = str.replace(/6/g, "õ");
 
+  return str;
+}
 
 const citizenCheckbox = document.getElementById('citizenCheckbox')
 const corporationCheckbox = document.getElementById('corporationCheckbox')
@@ -286,18 +242,22 @@ corporationForm.style.display = "none";
     corporationForm.style.display = "block";
   });
  
-  /*
+  
   const queryString = window.location.search;
   const urlParams = new URLSearchParams(queryString);
   const status = urlParams.get('status');
   if (status === "failed") {
-      const errors = [];
       let fullErrorString = urlParams.get("errors")
-      // errorid tulevad ühe kaupa max!
-      alert(fullErrorString)
+      alert(replaceChars(fullErrorString))
       }
-      
-   */
+  if(urlParams.get("formtype") === 'corporation') {
+        document.getElementById("citizenCheckbox").checked = false;
+        document.getElementById("corporationCheckbox").checked = true;
+        citizenForm.style.display = "none";
+        corporationForm.style.display = "block";
+            
+  }
+   
 </script>
 
 
