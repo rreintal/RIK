@@ -23,6 +23,7 @@
 
 1. Install all neccessary NuGet packages.
 2. Set local database location in class `ApplicationDbContextFactory`. This will be the location where SQLLite db file is saved.
+   **MUST BE STATIC LOCATION!**
 
 ```
 public ApplicationDbContext CreateDbContext(string[] args)
@@ -43,7 +44,8 @@ Do same thing in `appsettings.json`
 
 **MAKE SURE BOTH DB LOCATIONS MATCH AND HAVE .db EXTENSION!!**
 
-3. Now everything is set up and now you can run the code.
+3. Now cd into `DAL` and run command `dotnet ef database update`
+4. Now everything is set up and now you can run the code.
 
 ## Database ERD
 
