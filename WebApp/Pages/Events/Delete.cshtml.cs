@@ -13,23 +13,26 @@ namespace WebApp.Pages.Events
     public class DeleteModel : PageModel
     {
         private readonly DAL.ApplicationDbContext _context;
+        
+        private IEventRepository EventRepository { get; set; }
 
-        public DeleteModel(DAL.ApplicationDbContext context)
+        public DeleteModel(DAL.ApplicationDbContext context, IEventRepository eventRepository)
         {
             _context = context;
+            EventRepository = eventRepository;
         }
 
         [BindProperty]
       public Event Event { get; set; } = default!;
 
-        public async Task<IActionResult> OnGetAsync(Guid? id)
+        public async Task<IActionResult> OnGetAsync(Guid id)
         {
             if (id == null || _context.Events == null)
             {
                 return NotFound();
             }
 
-            var e = await _context.Events.FirstOrDefaultAsync(m => m.Id == id);
+            var e = EventRepository.GetEventById(id);
 
             if (e == null)
             {
@@ -42,18 +45,18 @@ namespace WebApp.Pages.Events
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync(Guid? id)
+        public async Task<IActionResult> OnPostAsync(Guid id)
         {
             if (id == null || _context.Events == null)
             {
                 return NotFound();
             }
-            var e = await _context.Events.FindAsync(id);
+            var e = EventRepository.GetEventById(id);
 
             if (e != null)
             {
                 Event = e;
-                _context.Events.Remove(Event);
+                EventRepository.DeleteEvent(Event);
                 await _context.SaveChangesAsync();
             }
 

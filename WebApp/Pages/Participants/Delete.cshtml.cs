@@ -13,23 +13,25 @@ namespace WebApp.Pages.Participants
     public class DeleteModel : PageModel
     {
         private readonly DAL.ApplicationDbContext _context;
+        private IParticipantRepository ParticipantRepository { get; set; }
 
-        public DeleteModel(DAL.ApplicationDbContext context)
+        public DeleteModel(DAL.ApplicationDbContext context, IParticipantRepository participantRepository)
         {
             _context = context;
+            ParticipantRepository = participantRepository;
         }
 
         [BindProperty]
       public Participant Participant { get; set; } = default!;
 
-        public async Task<IActionResult> OnGetAsync(Guid? id)
+        public async Task<IActionResult> OnGetAsync(Guid id)
         {
             if (id == null || _context.Participants == null)
             {
                 return NotFound();
             }
 
-            var participant = await _context.Participants.FirstOrDefaultAsync(m => m.Id == id);
+            var participant = ParticipantRepository.GetParticipantById(id);
 
             if (participant == null)
             {
@@ -42,18 +44,18 @@ namespace WebApp.Pages.Participants
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync(Guid? id)
+        public async Task<IActionResult> OnPostAsync(Guid id)
         {
             if (id == null || _context.Participants == null)
             {
                 return NotFound();
             }
-            var participant = await _context.Participants.FindAsync(id);
+            var participant = ParticipantRepository.GetParticipantById(id);
 
             if (participant != null)
             {
                 Participant = participant;
-                _context.Participants.Remove(Participant);
+                ParticipantRepository.DeleteParticipant(Participant);
                 await _context.SaveChangesAsync();
             }
 

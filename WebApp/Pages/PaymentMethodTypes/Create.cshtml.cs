@@ -13,10 +13,12 @@ namespace WebApp.Pages.PaymentMethodTypes
     public class CreateModel : PageModel
     {
         private readonly DAL.ApplicationDbContext _context;
+        private IPaymentMethodTypeRepository PaymentMethodTypeRepository { get; set; }
 
-        public CreateModel(DAL.ApplicationDbContext context)
+        public CreateModel(DAL.ApplicationDbContext context, IPaymentMethodTypeRepository paymentMethodTypeRepository)
         {
             _context = context;
+            PaymentMethodTypeRepository = paymentMethodTypeRepository;
         }
 
         public IActionResult OnGet()
@@ -35,8 +37,7 @@ namespace WebApp.Pages.PaymentMethodTypes
             {
                 return Page();
             }
-
-            _context.PaymentMethodTypes.Add(PaymentMethodType);
+            PaymentMethodTypeRepository.AddPaymentMethodType(PaymentMethodType);
             await _context.SaveChangesAsync();
 
             return RedirectToPage("./Index");

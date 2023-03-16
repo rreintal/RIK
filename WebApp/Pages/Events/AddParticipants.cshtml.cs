@@ -1,7 +1,10 @@
+using DAL;
+using DAL.DB;
 using Domain;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.CodeAnalysis.Elfie.Serialization;
 using Microsoft.EntityFrameworkCore;
 
 namespace WebApp.Pages.Events;
@@ -26,28 +29,32 @@ public class AddParticipants : PageModel
     public List<Participant> EventParticipants { get; set; } = default!;
 
     private readonly DAL.ApplicationDbContext _context;
+    
+    private IParticipantRepository ParticipantRepository { get; set; }
+    private IEventRepository EventRepository { get; set; }
+    
+    private IParticipantTypeRepository ParticipantTypeRepository { get; set; }
+    
+    private IPaymentMethodTypeRepository PaymentMethodTypeRepository { get; set; }
 
 
-    public AddParticipants(DAL.ApplicationDbContext context)
+    public AddParticipants(DAL.ApplicationDbContext context, 
+        IParticipantRepository participantRepository, 
+        IEventRepository eventRepository, 
+        IParticipantTypeRepository participantTypeRepository,
+        IPaymentMethodTypeRepository paymentMethodTypeRepository)
     {
         _context = context;
-        
-    }
+        ParticipantRepository = participantRepository;
+        EventRepository = eventRepository;
+        ParticipantTypeRepository = participantTypeRepository;
+        PaymentMethodTypeRepository = paymentMethodTypeRepository;
 
-    
-    public IActionResult DeleteParticipant(Guid id)
-    {
-        var participant = _context.Participants.First(x => x.Id == id);
-        _context.Participants.Remove(participant);
-        _context.SaveChanges();
-        return Redirect($"./AddParticipants?id={EventId}");
     }
-    
-
 
     public async Task<IActionResult> OnGetAsync(Guid id, string? delete)
     {
-        Event = _context.Events.First(x => x.Id == id);
+        Event = EventRepository.GetEventById(id);
         EventId = id;
 
         EventParticipants =  _context.Participants
@@ -62,15 +69,13 @@ public class AddParticipants : PageModel
         {
             return NotFound();
         }
-
-        var e = await _context.Events.FirstOrDefaultAsync(x => x.Id == id);
-
-        if (e == null)
+        
+        if (Event == null)
         {
             return NotFound();
         }
-        Event = e;
         return Page();
+        
     }
 
     public IActionResult OnPost(Guid? id)
@@ -79,17 +84,18 @@ public class AddParticipants : PageModel
         // Set type
         if (Participant.IsCompany)
         {
-            var type = _context.ParticipantTypes.First(x => x.Name == "Juriidiline isik");
+            var type = ParticipantTypeRepository.GetParticipantTypeByName("Juriidiline isik");
             Participant.ParticipantType = type;
         }
         else
         {
-            var type = _context.ParticipantTypes.First(x => x.Name == "Eraisik");
+            var type = ParticipantTypeRepository.GetParticipantTypeByName("Eraisik");
             Participant.ParticipantType = type;
         }
         
-        var e = _context.Events.First(x => x.Id == Participant.EventId);
-        var payment = _context.PaymentMethodTypes.First(x => x.Id == Participant.PaymentMethodTypeId);
+        var e = EventRepository.GetEventById(Participant.EventId);
+        
+        var payment = PaymentMethodTypeRepository.GetPaymentMethodTypeById(Participant.PaymentMethodTypeId);
         
         Participant.Event = e;
         Participant.PaymentMethodType = payment;
@@ -101,10 +107,7 @@ public class AddParticipants : PageModel
             var errorString = "";
             foreach (var error in ModelState.Values.SelectMany(v => v.Errors))
             {
-                // Display the error message to the user
                 string errorMessage = error.ErrorMessage;
-                // Alternatively, you can access the formatted error message using error.Exception.Message
-                Console.WriteLine(errorMessage);
                 errorString = errorMessage;
             }
 
@@ -112,16 +115,13 @@ public class AddParticipants : PageModel
             if (Participant.IsCompany)
             {
                 return Redirect($"./AddParticipants?id={id}&status=failed&errors={errorString}&formtype=corporation");
-                //return Redirect($"./AddParticipants?id={id}&status=failed&formtype=corporation");    
             }
             return Redirect($"./AddParticipants?id={id}&status=failed&errors={errorString}");
             
         }
 
-        
-        _context.Participants.Add(Participant);
+        ParticipantRepository.AddParticipant(Participant);
         _context.SaveChanges();
-
         return RedirectToPage($"../Index");
     }
 

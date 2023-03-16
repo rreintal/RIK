@@ -13,10 +13,12 @@ namespace WebApp.Pages.PaymentMethodTypes
     public class DeleteModel : PageModel
     {
         private readonly DAL.ApplicationDbContext _context;
+        private IPaymentMethodTypeRepository PaymentMethodTypeRepository { get; set; }
 
-        public DeleteModel(DAL.ApplicationDbContext context)
+        public DeleteModel(DAL.ApplicationDbContext context, IPaymentMethodTypeRepository paymentMethodTypeRepository)
         {
             _context = context;
+            PaymentMethodTypeRepository = paymentMethodTypeRepository;
         }
 
         [BindProperty]
@@ -29,7 +31,7 @@ namespace WebApp.Pages.PaymentMethodTypes
                 return NotFound();
             }
 
-            var paymentmethodtype = await _context.PaymentMethodTypes.FirstOrDefaultAsync(m => m.Id == id);
+            var paymentmethodtype = PaymentMethodTypeRepository.GetPaymentMethodTypeById(id.Value);
 
             if (paymentmethodtype == null)
             {
@@ -48,12 +50,12 @@ namespace WebApp.Pages.PaymentMethodTypes
             {
                 return NotFound();
             }
-            var paymentmethodtype = await _context.PaymentMethodTypes.FindAsync(id);
+            var paymentmethodtype = PaymentMethodTypeRepository.GetPaymentMethodTypeById(id.Value);
 
             if (paymentmethodtype != null)
             {
                 PaymentMethodType = paymentmethodtype;
-                _context.PaymentMethodTypes.Remove(PaymentMethodType);
+                PaymentMethodTypeRepository.DeletePaymentMethodType(PaymentMethodType);
                 await _context.SaveChangesAsync();
             }
 

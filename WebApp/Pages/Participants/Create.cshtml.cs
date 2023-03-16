@@ -13,10 +13,12 @@ namespace WebApp.Pages.Participants
     public class CreateModel : PageModel
     {
         private readonly DAL.ApplicationDbContext _context;
+        private IParticipantRepository ParticipantRepository { get; set; }
 
-        public CreateModel(DAL.ApplicationDbContext context)
+        public CreateModel(DAL.ApplicationDbContext context, IParticipantRepository participantRepository)
         {
             _context = context;
+            ParticipantRepository = participantRepository;
         }
 
         public IActionResult OnGet()
@@ -39,7 +41,7 @@ namespace WebApp.Pages.Participants
                 return Page();
             }
 
-            _context.Participants.Add(Participant);
+            ParticipantRepository.AddParticipant(Participant);
             await _context.SaveChangesAsync();
 
             return RedirectToPage("./Index");

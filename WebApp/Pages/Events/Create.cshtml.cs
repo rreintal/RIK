@@ -18,10 +18,10 @@ namespace WebApp.Pages.Events
         private readonly DAL.ApplicationDbContext _context;
         private IEventRepository EventRepository;
 
-        public CreateModel(DAL.ApplicationDbContext context)
+        public CreateModel(DAL.ApplicationDbContext context, IEventRepository eventRepository)
         {
             _context = context;
-            EventRepository = new EventRepository(context);
+            EventRepository = eventRepository;
         }
 
         public IActionResult OnGet()
@@ -40,8 +40,7 @@ namespace WebApp.Pages.Events
             {
                 return Page();
             }
-
-            _context.Events.Add(Event);
+            EventRepository.AddEvent(Event);
             await _context.SaveChangesAsync();
 
             return RedirectToPage("../Index");

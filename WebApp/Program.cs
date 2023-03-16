@@ -14,6 +14,8 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 
 builder.Services.AddScoped<IEventRepository, EventRepository>();
 builder.Services.AddScoped<IParticipantRepository, ParticipantRepository>();
+builder.Services.AddScoped<IParticipantTypeRepository, ParticipantTypeRepository>();
+builder.Services.AddScoped<IPaymentMethodTypeRepository, PaymentMethodTypeRepository>();
 
 var app = builder.Build();
 

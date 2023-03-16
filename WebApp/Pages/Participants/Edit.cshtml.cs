@@ -14,10 +14,12 @@ namespace WebApp.Pages.Participants
     public class EditModel : PageModel
     {
         private readonly DAL.ApplicationDbContext _context;
+        private IParticipantRepository ParticipantRepository { get; set; }
 
-        public EditModel(DAL.ApplicationDbContext context)
+        public EditModel(DAL.ApplicationDbContext context, IParticipantRepository participantRepository)
         {
             _context = context;
+            ParticipantRepository = participantRepository;
         }
 
         [BindProperty]
@@ -30,7 +32,7 @@ namespace WebApp.Pages.Participants
                 return NotFound();
             }
 
-            var participant =  await _context.Participants.FirstOrDefaultAsync(m => m.Id == id);
+            var participant = ParticipantRepository.GetParticipantById(id.Value);
             if (participant == null)
             {
                 return NotFound();
