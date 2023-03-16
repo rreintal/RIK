@@ -54,7 +54,7 @@ The Repository pattern facilitates separation of concerns by abstracting data ac
 
 Overall, the use of the Repository pattern in our application's DAL provides a robust and flexible approach to data access that can accommodate potential changes to the underlying data storage system, while ensuring seamless integration with other components of the system.
 
-Current system offers a convenient endpoint, "/PaymentMethodTypes/Create", which enables the addition of custom payment method types. This feature provides users with the ability to add new payment methods without the need for modifying the source code, thereby reducing the risk of introducing errors and simplifying the process of extending the system's functionality.
+Current system offers a convenient endpoint, `"/PaymentMethodTypes/Create"`, which enables the addition of custom payment method types. This feature provides users with the ability to add new payment methods without the need for modifying the source code, thereby reducing the risk of introducing errors and simplifying the process of extending the system's functionality.
 
 Testing framework of choice for this project is xUnit. The testing suite includes two types of tests: basic database operation tests and domain model validation tests.
 
