@@ -23,7 +23,7 @@
 
 1. Install all neccessary NuGet packages.
 2. Set local database location in class `ApplicationDbContextFactory`. This will be the location where SQLLite db file is saved.
-   **MUST BE STATIC LOCATION!**
+   **MUST BE ABSOLUTE PATH!**
 
 ```
 public ApplicationDbContext CreateDbContext(string[] args)
